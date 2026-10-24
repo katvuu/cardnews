@@ -1,0 +1,28 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>인증 코드</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+background:#121212;color:#F2F0EA;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px}
+.box{max-width:640px;width:100%}
+h1{font-size:22px;margin:0 0 6px}
+p{color:#B5B0A5;font-size:15px;line-height:1.6;margin:0 0 18px}
+code{display:block;background:#1E1E1E;border:1px solid #3A3A3A;border-radius:10px;
+padding:16px;font-size:14px;word-break:break-all;line-height:1.5}
+button{margin-top:12px;background:#C42B16;color:#F2F0EA;border:0;border-radius:8px;
+padding:11px 18px;font-size:15px;cursor:pointer}
+.err{color:#FF8A6B}
+</style></head><body><div class="box">
+<h1>인증 코드</h1>
+<p id="msg">아래 코드를 복사해 터미널에 붙여넣으세요. 1시간 동안만, 한 번만 쓸 수 있어요.</p>
+<code id="code">읽는 중…</code>
+<button id="btn">복사</button>
+<script>
+var p=new URLSearchParams(location.search),c=p.get("code"),e=p.get("error_description")||p.get("error");
+var el=document.getElementById("code");
+if(c){el.textContent=c.replace(/#_$/,"");}
+else{el.textContent=e||"코드가 없어요. 인증을 다시 시작해 주세요.";
+el.className="err";document.getElementById("msg").textContent="인증이 완료되지 않았어요.";}
+document.getElementById("btn").onclick=function(){
+navigator.clipboard.writeText(el.textContent).then(function(){
+document.getElementById("btn").textContent="복사됨";});};
+</script></div></body></html>
